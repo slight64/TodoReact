@@ -1,0 +1,8 @@
+.add-item-form {
+    margin-top: 15px;
+    display: flex;
+}
+
+.add-item-form input { 
+margin-right: 3px;
+}
