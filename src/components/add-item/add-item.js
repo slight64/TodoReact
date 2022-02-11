@@ -12,7 +12,7 @@ export default class AddItem extends Component {
   };
   onSubmit = (e) => {
       e.preventDefault();
-      if (this.state.label) {
+      if (this.state.label.trim()) {
         this.props.onItemAdded(this.state.label);
       } 
       this.setState({

@@ -33,9 +33,7 @@ export default class App extends Component {
   deleteItem = (id) => {
     this.setState(({ todoData }) => {
       const idx = todoData.findIndex((el) => el.id === id);
-
       const newData = [...todoData.slice(0, idx), ...todoData.slice(idx + 1)];
-
       return {
         todoData: newData,
       };
@@ -87,12 +85,16 @@ export default class App extends Component {
     this.setState({ term });
   };
 
+  onStatusChange = (status) => {
+    this.setState({ status });
+  };
+
   onStatusFilter = (items, status) => {
     const doneItems = items.filter((el) => el.done);
     const allItems = items;
     const notDoneItems = items.filter((el) => !el.done);
     if (status === "all") {
-      return allItems
+      return allItems;
     }
     if (status === "done") {
       return doneItems;
@@ -100,12 +102,15 @@ export default class App extends Component {
     if (status === "active") {
       return notDoneItems;
     }
-
-
   };
+
   render() {
     const { todoData, term, status } = this.state;
-    const filteredItems = this.onStatusFilter(this.searchFilter(todoData, term),status);
+    const filteredItems = this.onStatusFilter(
+      this.searchFilter(todoData, term),
+      status
+    );
+
     const doneCount = todoData.filter((el) => el.done).length;
     const todoCount = todoData.length - doneCount;
 
@@ -114,7 +119,10 @@ export default class App extends Component {
         <AppHeader toDo={todoCount} done={doneCount} />
         <div className="top-panel d-flex">
           <SearchPanel onLabelChange={this.onFiltered} />
-          <ItemStatusFilter />
+          <ItemStatusFilter
+            statusFilter={this.onStatusChange}
+            status={this.state.status}
+          />
         </div>
 
         <TodoList
