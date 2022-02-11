@@ -5,7 +5,6 @@ import SearchPanel from "../search-panel";
 import TodoList from "../todo-list";
 import ItemStatusFilter from "../item-status-filter";
 import AddItem from "../add-item";
-import Test from "../test";
 
 import "./app.css";
 
@@ -125,7 +124,6 @@ export default class App extends Component {
           onToggleDone={this.onToggleDone}
         />
         <AddItem onItemAdded={this.addItem} />
-        <Test />
       </div>
     );
   }
