@@ -18,7 +18,8 @@ export default class App extends Component {
       this.createTodoItem("Second to do"),
       this.createTodoItem("Lazy day is here"),
     ],
-    term: ""
+    term: "",
+    status: "all",
   };
 
   createTodoItem(label) {
@@ -27,7 +28,6 @@ export default class App extends Component {
       important: false,
       done: false,
       id: this.maxId++,
-      show: true,
     };
   }
 
@@ -77,22 +77,36 @@ export default class App extends Component {
     });
   };
   searchFilter = (items, text) => {
- 
     if (text.length === 0) {
-      console.log(items, text);
-      return items
+      return items;
     }
-    console.log(items, text);
     return items.filter((el) => {
-       return el.label.toLowerCase().indexOf(text.toLowerCase()) > -1
-    })
+      return el.label.toLowerCase().indexOf(text.toLowerCase()) > -1;
+    });
   };
   onFiltered = (term) => {
-    this.setState({term})
-  }
+    this.setState({ term });
+  };
+
+  onStatusFilter = (items, status) => {
+    const doneItems = items.filter((el) => el.done);
+    const allItems = items;
+    const notDoneItems = items.filter((el) => !el.done);
+    if (status === "all") {
+      return allItems
+    }
+    if (status === "done") {
+      return doneItems;
+    }
+    if (status === "active") {
+      return notDoneItems;
+    }
+
+
+  };
   render() {
-    const { todoData, term } = this.state;
-    const filteredItems = this.searchFilter(todoData, term)
+    const { todoData, term, status } = this.state;
+    const filteredItems = this.onStatusFilter(this.searchFilter(todoData, term),status);
     const doneCount = todoData.filter((el) => el.done).length;
     const todoCount = todoData.length - doneCount;
 
